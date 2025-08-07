@@ -1,12 +1,12 @@
 pipeline {
     agent any
     environment {
-        DOCKERHUB_USER = "yourdockerhubusername"
+        DOCKERHUB_USER = "vaibhavgumalwad"
     }
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'develop', url: 'https://github.com/yourusername/myapp.git'
+                git branch: 'develop', url: 'https://github.com/VaibhavGumalwad/CasestudyDevops.git'
             }
         }
         stage('Build & Push Docker Image') {

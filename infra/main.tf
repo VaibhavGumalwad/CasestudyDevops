@@ -33,12 +33,12 @@ resource "aws_security_group" "web" {
   }
 }
 resource "aws_instance" "app" {
-  ami                         = "ami-0c02fb55956c7d316"
+  ami                         = "ami-0f918f7e67a3323f0"
   instance_type               = var.instance_type
   subnet_id                   = aws_subnet.public.id
   associate_public_ip_address = true
   security_groups             = [aws_security_group.web.name]
-  key_name                    = "your-key-name"
+  key_name                    = "Keypair-Vaibhav"
   tags = {
     Name = "DevOpsAppInstance"
   }
