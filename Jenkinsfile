@@ -9,15 +9,23 @@ pipeline {
                 git branch: 'develop', url: 'https://github.com/VaibhavGumalwad/CasestudyDevops.git'
             }
         }
-stage('Build & Push Docker Image') {
-    steps {
-        withCredentials([usernamePassword(credentialsId: 'dockerhub', 
-                                          usernameVariable: 'DOCKER_HUB_USERNAME', 
-                                          passwordVariable: 'DOCKER_HUB_PASSWORD')]) {
-            sh './scripts/build_and_push.sh'
+stage('Build & Push Docker') {
+      steps {
+        script {
+          withCredentials([usernamePassword(
+            credentialsId: 'docker-hub-creds',
+            usernameVariable: 'DOCKER_USERNAME',
+            passwordVariable: 'DOCKER_PASSWORD'
+          )]) {
+            sh '''
+              echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+              docker build -t vaibhavgumalwad/myapp:$GIT_COMMIT .
+              docker push vaibhavgumalwad/myapp:$GIT_COMMIT
+            '''
+          }
         }
+      }
     }
-}
 
         stage('Terraform Apply') {
             steps {
