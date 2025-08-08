@@ -13,7 +13,7 @@ stage('Build & Push Docker') {
       steps {
         script {
           withCredentials([usernamePassword(
-            credentialsId: 'docker-hub-creds',
+            credentialsId: 'dockerhub',
             usernameVariable: 'DOCKER_USERNAME',
             passwordVariable: 'DOCKER_PASSWORD'
           )]) {
