@@ -9,11 +9,16 @@ pipeline {
                 git branch: 'develop', url: 'https://github.com/VaibhavGumalwad/CasestudyDevops.git'
             }
         }
-        stage('Build & Push Docker Image') {
-            steps {
-                sh './scripts/build_and_push.sh'
-            }
+stage('Build & Push Docker Image') {
+    steps {
+        withCredentials([usernamePassword(credentialsId: 'dockerhub', 
+                                          usernameVariable: 'DOCKER_HUB_USERNAME', 
+                                          passwordVariable: 'DOCKER_HUB_PASSWORD')]) {
+            sh './scripts/build_and_push.sh'
         }
+    }
+}
+
         stage('Terraform Apply') {
             steps {
                 dir('infra') {
